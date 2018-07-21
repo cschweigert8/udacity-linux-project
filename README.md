@@ -66,6 +66,11 @@ sudo ufw allow udp
 sudo ufw enable
 ```
 #### Install Apache and configure for mod_wsgi app
+```
+sudo apt-get install apache2
+sudo apt-get install python-setuptools libapache2-mod-wsgi
+sudo service apache2 restart
+```
 #### Install and Configure PostgreSQL
 ```
 sudo apt-get install postgresql
