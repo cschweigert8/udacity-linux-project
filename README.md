@@ -22,40 +22,41 @@ http://34.221.139.27
 * git
 
 ### Summary of Configurations Made
-1. Create new user and give sudo access
-`sudo adduser grader`
-`sudo vi /etc/sudoers.d/grader`
-`grader ALL=(ALL:ALL) ALL`
-2. Install SSH keys
-   Generate keys on local using `ssh-keygen`
-   Save private key in ~/.ssh
-   Add public key to lightsail environment
-   `su - grader` to change to the grader user
-   
-   Create authorized_keys file and open editor - copy the public key in here and save
-   ```
-   sudo mkdir ~/.ssh
-   sudo vi ~/.ssh/authorized_keys
-   ``` 
-   change permissions by running 
+#### Create new user and give sudo access
+```
+sudo adduser grader
+sudo vi /etc/sudoers.d/grader
+```
+Insert text `grader ALL=(ALL:ALL) ALL`
+#### Install SSH keys
+1. Generate keys on local using `ssh-keygen`
+2. Save private key in ~/.ssh
+3. Add public key to lightsail environment
+4. `su - grader` to change to the grader user
+5. Create authorized_keys file and open editor - copy the public key in here and save
+```
+sudo mkdir ~/.ssh
+sudo vi ~/.ssh/authorized_keys
+``` 
+6. Change permissions to directory and file
    ```
    sudo chmod 700 ~/.ssh
    sudo chmod 644 ~/.ssh/authorized_keys
    ```
-   Reload SSH `service ssh restart`
-3. Update packages
+7. Reload SSH `service ssh restart`
+#### Update packages
 ```
 sudo apt-get update
 sudo apt-get upgrade
 ```
-4. Change SSH port
+#### Change SSH port
 ```
 sudo vi /etc/ssh/sshd_config
 sudo service ssh restart
 ```
-   I also had to replace the default SSH port 22 with a custom TCP port 2200 on the lightsail admin page under the networking tab.
+I also had to replace the default SSH port 22 with a custom TCP port 2200 on the lightsail admin page under the networking tab.
 
-5. Configure UFW
+#### Configure UFW
 ```
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
@@ -64,9 +65,19 @@ sudo ufw allow 2200/tcp
 sudo ufw allow udp
 sudo ufw enable
 ```
-6. Install Apache and configure for mod_wsgi app
-7. Install and Configure PostgreSQL
-   
-   Check `/etc/postgresql/9.5/main/pg_hba.conf` to see if remote connections are allowed
-
-8. Install git, clone catalog project, and configure to run as wsgi application
+#### Install Apache and configure for mod_wsgi app
+#### Install and Configure PostgreSQL
+```
+sudo apt-get install postgresql
+sudo su - postgres
+psql
+postgres=# CREATE DATABASE catalog;
+postgres=# CREATE USER catalog;
+postgres=# ALTER ROLE catalog WITH PASSWORD 'catalog';
+postgres=# GRANT ALL PRIVILEGES ON DATABASE catalog TO catalog;
+```
+Check `/etc/postgresql/9.5/main/pg_hba.conf` to see if remote connections are allowed
+```
+sudo vi /etc/postgresql/9.5/main/pg_hba.conf
+```
+#### Install git, clone catalog project, and configure to run as wsgi application
