@@ -85,4 +85,4 @@ Check `/etc/postgresql/9.5/main/pg_hba.conf` to see if remote connections are al
 ```
 sudo vi /etc/postgresql/9.5/main/pg_hba.conf
 ```
-#### Install git, clone catalog project, and configure to run as wsgi application
+#### Finally, install git, clone catalog project, and configure to run as wsgi application
