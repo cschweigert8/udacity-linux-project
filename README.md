@@ -21,6 +21,12 @@ http://34.221.139.27
 * PostGreSQL
 * git
 
+### Resources Used
+* askubuntu.com
+* stackoverflow.com
+* digitalocean.com
+* flask.pocoo.org
+
 ### Summary of Configurations Made
 #### Create new user and give sudo access
 ```
@@ -65,6 +71,10 @@ sudo ufw allow 2200/tcp
 sudo ufw allow udp
 sudo ufw enable
 ```
+#### Remove root login
+```sudo vi /etc/ssh/sshd_config```
+
+Change `#PermitRootLogin prohibit-password` to `#PermitRootLogin no`
 #### Install Apache and configure for mod_wsgi app
 ```
 sudo apt-get install apache2
